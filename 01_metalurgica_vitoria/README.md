@@ -1,19 +1,6 @@
+<img src = "der.svg">
 
-# Atividade - Metalúrgica Vitória (tabela Fornecedores)
-
-**Tipo:** Atividade
-
-<br><br><img src = "der.svg"><br><br>
-
-## Continuando na Metalúrgica Vitória
-
-Você já criou o banco `MetalurgicaVitoria` e a tabela `Produtos` na atividade anterior. A fábrica gostou tanto do resultado que pediu o próximo passo: agora também querem controlar quem são os **fornecedores** que abastecem a produção com matéria-prima.
-
-Nesta atividade você vai criar essa nova tabela sozinho(a) — com a ajuda de uma revisão rápida logo abaixo. Não se preocupe em errar o comando de primeira: escrever, executar, ver o erro e corrigir faz parte do processo (e é assim no trabalho real também).
-
-## Objetivo da atividade
-
-Praticar os três grupos de comandos SQL que você vai usar o tempo todo:
+# Metalúrgica Vitória
 
 - **DDL** (Data Definition Language) — define a estrutura: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
 - **DML** (Data Manipulation Language) — mexe nos dados: `INSERT`, `UPDATE`, `DELETE`.
@@ -42,7 +29,7 @@ Praticar os três grupos de comandos SQL que você vai usar o tempo todo:
 
 ## Mão na massa
 
-Abra uma **New Query** conectada ao banco `MetalurgicaVitoria` e resolva os passos abaixo. Tente escrever os comandos você mesmo(a) antes de olhar o gabarito no final da página.
+Abra uma **New Query** conectada ao banco `MetalurgicaVitoria` e resolva os passos abaixo. 
 
 **1. Criar a tabela `Fornecedores` (DDL)**
 
