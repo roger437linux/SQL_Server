@@ -1,4 +1,4 @@
-# Atividade - Metalúrgica Vitória (Fornecedores)
+# Atividade - Metalúrgica Vitória (tabela Fornecedores)
 
 **Tipo:** Atividade
 
