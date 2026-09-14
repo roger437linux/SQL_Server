@@ -42,7 +42,7 @@ ROLLBACK TRANSACTION;
 
 UPDATE dbo.Produtos SET qtde_estoque_produto = 200 WHERE id_produto = 1002;
 
-
+-- INICIANDO UMA TRANSAÇÃO SQL
 BEGIN TRANSACTION;
 
 DELETE FROM dbo.Produtos;
