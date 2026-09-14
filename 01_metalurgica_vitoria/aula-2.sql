@@ -1,6 +1,6 @@
 SELECT DB_NAME();
 
-USE MetalurgicaVitoria;
+USE metalurgica_vitoria;
 
 SELECT NAME FROM SYS.TABLES;
 
