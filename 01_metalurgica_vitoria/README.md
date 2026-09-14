@@ -3,7 +3,7 @@
 
 **Tipo:** Atividade
 
-<br><img src = "der.svg"><br>
+<br><br><img src = "der.svg"><br><br>
 
 ## Continuando na Metalúrgica Vitória
 
