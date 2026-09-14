@@ -1,10 +1,10 @@
 
 -- DDL -> DATA DEFINITION LANGUAGE
-CREATE DATABASE MetalurgicaVitoria;
+CREATE DATABASE metalurgica_vitoria;
 
 SELECT NAME FROM sys.databases;
 
-USE MetalurgicaVitoria;
+USE metalurgica_vitoria;
 
 SELECT db_name();
 
@@ -24,7 +24,7 @@ INSERT INTO Produtos (nome_produto, categoria_produto, qtde_estoque_produto, pre
 VALUES 
 ('Parafuso M8', 'Fixação', 5000, 0.75),
 ('Chapa de aço', 'Chapas', 120, 89.99),
-('Engrenagem 40 dntes', 'Componentes', 300, 27.15);
+('Engrenagem 40 dentes', 'Componentes', 300, 27.15);
 
 
 -- DQL -> DATA QUERY LANGUAGE
@@ -54,4 +54,3 @@ ROLLBACK TRANSACTION;
 DELETE FROM dbo.Produtos WHERE id_produto = 1002;
 
 SELECT * FROM dbo.Produtos;
-
