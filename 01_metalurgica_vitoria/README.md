@@ -1,9 +1,9 @@
 
-<img src = "der.svg"><br>
-
 # Atividade - Metalúrgica Vitória (tabela Fornecedores)
 
 **Tipo:** Atividade
+
+<br><img src = "der.svg"><br>
 
 ## Continuando na Metalúrgica Vitória
 
