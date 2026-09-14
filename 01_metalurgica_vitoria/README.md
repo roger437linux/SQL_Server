@@ -2,8 +2,6 @@
 
 **Tipo:** Atividade
 
-**Data:** Última edição: 17 de mar. de 2025
-
 ## Continuando na Metalúrgica Vitória
 
 Você já criou o banco `MetalurgicaVitoria` e a tabela `Produtos` na atividade anterior. A fábrica gostou tanto do resultado que pediu o próximo passo: agora também querem controlar quem são os **fornecedores** que abastecem a produção com matéria-prima.
