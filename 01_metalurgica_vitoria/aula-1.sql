@@ -1,9 +1,4 @@
 
--- DDL -> DATA DEFINITION LANGUAGE
-CREATE DATABASE metalurgica_vitoria;
-
-SELECT NAME FROM sys.databases;
-
 USE metalurgica_vitoria;
 
 SELECT db_name();
@@ -11,10 +6,10 @@ SELECT db_name();
 CREATE TABLE Produtos (
 	id_produto INT IDENTITY(1001, 1) PRIMARY KEY,
 	nome_produto VARCHAR(100) NOT NULL,
-	categoria_produto VARCHAR(100),
+	categoria_produto VARCHAR(100) NULL,
 	qtde_estoque_produto INT NOT NULL,
-	preco_uni_produto DECIMAL(10, 2),
-	data_cadastro_produto DATETIME2 DEFAULT GETDATE()
+	preco_uni_produto DECIMAL(10, 2) NULL,
+	data_cadastro_produto DATETIME2 NULL DEFAULT GETDATE()
 );
 
 SELECT NAME FROM SYS.TABLES;

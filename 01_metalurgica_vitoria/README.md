@@ -1,4 +1,4 @@
-<img src = "der.svg">
+<br><img src = "der.svg"><br><br>
 
 # Metalúrgica Vitória
 

@@ -18,7 +18,9 @@ CREATE TABLE Fornecedores (
 
 -- 2. Adicionar uma nova coluna em Produtos (DDL)
 
-ALTER TABLE dbo.Produtos ADD id_fornecedor INT NULL;
+ALTER TABLE dbo.Produtos ADD id_fornecedor INT NULL
+CONSTRAINT FK_Produtos_Fornecedores FOREIGN KEY(id_fornecedor)
+REFERENCES dbo.Fornecedores(id_fornecedor);
 
 
 SELECT * FROM dbo.Produtos;
@@ -45,6 +47,9 @@ SELECT * FROM dbo.Fornecedores;
 UPDATE dbo.Produtos SET id_fornecedor = 2000 WHERE id_produto = 1001;
 UPDATE dbo.Produtos SET id_fornecedor = 2002 WHERE id_produto = 1002;
 UPDATE dbo.Produtos SET id_fornecedor = 2000 WHERE id_produto = 1003;
+
+INSERT INTO dbo.Produtos (nome_produto, categoria_produto, qtde_estoque_produto, preco_uni_produto, id_fornecedor)
+VALUES ('Furadeira manual', 'Construção', 10, 2500, 2001);
 
 -- 5. Consultar (DQL)
 -- Escreva uma consulta que mostre apenas os fornecedores 
@@ -76,12 +81,6 @@ TRUNCATE TABLE Rascunho;
 
 SELECT * FROM dbo.Produtos;
 SELECT * FROM dbo.Fornecedores;
-
-ALTER TABLE dbo.Produtos ADD CONSTRAINT FK_Produtos_Fornecedor FOREIGN KEY(id_fornecedor)
-REFERENCES dbo.Fornecedores(id_fornecedor);
-
-INSERT INTO dbo.Produtos (nome_produto, categoria_produto, qtde_estoque_produto, preco_uni_produto, id_fornecedor)
-VALUES ('Furadeira manual', 'Construção', 10, 2500, 2001);
 
 -- Retornar nome_produto, preço, fornecedor e cidade.
 
