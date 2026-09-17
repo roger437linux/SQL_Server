@@ -59,3 +59,8 @@ ORDER BY "Preço total p/ categoria" ASC;
 SELECT COUNT(*) AS qtde_fornecedores_sp FROM Fornecedores
 WHERE cidade =  'São Paulo';
 
+
+-- --------------------
+-- Aula 17/09/2026
+-- --------------------
+
