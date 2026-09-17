@@ -1,0 +1,102 @@
+---
+title: "Meu Primeiro Relatório"
+author: "Seu Nome"
+date: "2026-09-16"
+format:
+  html:
+    theme: cosmo            # Define o estilo visual da página
+    toc: true               # Adiciona sumário (Tabela de Conteúdos)
+    toc-depth: 3            # Nível máximo de títulos no sumário
+    number-sections: false  # Numera os títulos automaticamente
+    code-fold: true         # Permite ocultar/mostrar blocos de código
+  
+  pdf:
+    toc: true               # Adiciona sumário no PDF
+    number-sections: true   # Numera os títulos no PDF
+    geometry:
+      - top=30mm            # Margens da página
+      - left=20mm
+---
+
+
+quarto preview index.qmd
+
+
+# 📘 👨‍💻 📄 Títulos e Texto
+
+## Nível 2
+
+### Nível 3
+
+Você pode usar **negrito**, *itálico*, ou ambos: ***negrito e itálico***.
+
+> A matemática é a linguagem com a qual Deus escreveu o universo. — Galileu
+
+### 🔷 Links:
+
+[Modelo de Markdown com Quarto – Parte 1](https://blogdomarcellini.com.br/posts/programacao/quarto/modelos-markdown.html)
+
+[Site oficial do Quarto](https://quarto.org)
+
+## 🔷 Lista com marcadores:
+
+
+- Item A
+- Item B
+  - Subitem B.1
+  - Subitem B.2
+
+## 🔷 Lista numerada:
+
+
+1. Primeiro
+2. Segundo
+3. Terceiro
+
+## 🔷 Link:
+
+[Site oficial do Quarto](https://quarto.org)
+
+# 🔷 Tabelas
+
+
+| Nome     | Idade | Cidade      |
+|-|-|-|
+| Alice    | 25    | São Paulo   |
+| Bernardo | 30    | Salvador    |
+| Carla    | 22    | Curitiba    |
+
+\
+\
+
+A famosa identidade de Euler: $e^{i\pi} + 1 = 0$
+
+\
+
+$$
+\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+$$
+
+
+### 🔷 Bloco em R:
+
+```javascript
+x <- seq(0, 2*pi, length.out = 100)
+plot(x, sin(x), type = "l", col = "blue", lwd = 2)
+```
+
+\
+
+### 🔷 Bloco em Python:
+
+
+```javascript
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 2*np.pi, 100)
+plt.plot(x, np.sin(x))
+plt.title("Seno")
+plt.show()
+```
+
