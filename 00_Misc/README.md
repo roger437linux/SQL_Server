@@ -1,5 +1,5 @@
 
-![](https://media.licdn.com/dms/image/v2/D4D22AQE2fVXupE5Z3A/feedshare-shrink_800/feedshare-shrink_800/0/1732551662042?e=2147483647&v=beta&t=PkP47I_yPYEK3DqxgCnbq_uIgPqn-hBVsMrqBVXR2fk)
+![]("https://media.licdn.com/dms/image/v2/D4D22AQE2fVXupE5Z3A/feedshare-shrink_800/feedshare-shrink_800/0/1732551662042?e=2147483647&v=beta&t=PkP47I_yPYEK3DqxgCnbq_uIgPqn-hBVsMrqBVXR2fk")
 
 # Union e Union All
 
