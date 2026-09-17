@@ -1,5 +1,5 @@
 
-<img src="../images/images/union.png" width="50%"><br><br>
+<img src="../images/union.png" width="50%"><br><br>
 
 # Union e Union All
 
