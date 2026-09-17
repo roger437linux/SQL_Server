@@ -1,7 +1,5 @@
 
-<img src="images/union.jpg" width="40%">
-
-\
+<img src="images/union.jpg" width="50%"><br><br>
 
 # Union e Union All
 
