@@ -7,14 +7,23 @@
 
 ```javascript
 SELECT 7 UNION SELECT 4;
+7
+4
+
 SELECT 3 UNION SELECT 3;
+3
 ```
 
 ### Union all -> Combina resultados de queries mantendo duplicatas
 
 ```javascript
 SELECT 7 UNION ALL SELECT 4;
+7
+4
+
 SELECT 5 UNION ALL SELECT 5;
+5
+5
 ```
 
 > Uma regra importante:
