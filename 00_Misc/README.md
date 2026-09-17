@@ -1,5 +1,7 @@
 
-<img src="images/union.jpg" width="60%">
+<img src="images/union.jpg" width="40%">
+
+\
 
 # Union e Union All
 
@@ -18,5 +20,5 @@ SELECT 5 UNION ALL SELECT 5;
 ```
 
 > Uma regra importante:
-> O resultado das consultas precisam ter a
-> mesma qtde de colunas e tipos compatíveis.
+ O resultado das consultas precisam ter a
+ mesma qtde de colunas e tipos compatíveis.
