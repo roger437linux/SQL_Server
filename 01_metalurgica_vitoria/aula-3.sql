@@ -64,3 +64,22 @@ WHERE cidade =  'São Paulo';
 -- Aula 17/09/2026
 -- --------------------
 
+-- Agrupamento
+
+-- Exibir a qtde de produtos (COUNT) e estoque total (sum) por categoria (GROUP BY)
+
+SELECT Produtos.categoria_produto, 
+COUNT(*) AS qtde_produtos, 
+SUM(Produtos.qtde_estoque_produto) AS "soma estoque total"
+FROM Produtos
+GROUP BY Produtos.categoria_produto
+ORDER BY qtde_produtos DESC;
+
+-- Quantidade de fornecedores por cidade
+
+SELECT Fornecedores.cidade, COUNT(*) AS qtde_fornecedores
+FROM Fornecedores
+GROUP BY Fornecedores.cidade
+ORDER BY qtde_fornecedores DESC;
+
+select * from Fornecedores;
