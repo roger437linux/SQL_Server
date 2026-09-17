@@ -1,5 +1,5 @@
 
-![union](images/union.jpg)
+<img src="images/union.jpg" width="60%">
 
 # Union e Union All
 
