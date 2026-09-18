@@ -44,7 +44,7 @@ CREATE TABLE cursos (
 );
 
 CREATE TABLE matriculas (
-  id_matricula INT IDENTITY(100, 1) PRIMARY KEY,
+  id_matricula INT IDENTITY(101, 1) PRIMARY KEY,
   data_matricula DATE NOT NULL DEFAULT GETDATE(),
   id_curso INT NOT NULL,
   id_aluno INT NOT NULL,
@@ -126,6 +126,46 @@ INSERT INTO matriculas (id_curso, id_aluno) VALUES
 
 -- ---------------- Consultas -----------------
 
-select * from cursos;
-select * from alunos;
-select * from matriculas;
+
+SELECT TOP(5) * FROM instrutores;
+SELECT TOP(5) * FROM alunos;
+SELECT TOP(5) * FROM cursos;
+SELECT TOP(5) * FROM matriculas
+
+
+-- 1. Contem quantos alunos estão matriculados em cada curso.
+
+SELECT matriculas.id_curso, 
+COUNT(*) as qtde_alunos
+FROM matriculas
+GROUP BY matriculas.id_curso;
+
+-- Versão final
+
+SELECT cursos.nome_curso AS "Curso",
+COUNT(*) AS "Qtde matriculas"
+FROM matriculas
+INNER JOIN cursos
+ON matriculas.id_curso = cursos.id_curso
+GROUP BY matriculas.id_curso, cursos.nome_curso
+ORDER BY "Qtde matriculas" DESC;
+
+
+-- 2. Calculem o total de matrículas registradas em todo o banco de dados.
+
+SELECT COUNT(*) AS "Total matriculas" FROM matriculas
+
+
+-- 3. Encontrem o instrutor responsável pelo maior número de cursos.
+
+SELECT instrutores.nome_instrutor AS "Instrutor", 
+COUNT(*) AS "Qtde cursos"
+FROM cursos
+INNER JOIN instrutores
+ON instrutores.id_instrutor = cursos.id_instrutor
+GROUP BY instrutores.nome_instrutor
+ORDER BY "Qtde cursos" DESC;
+
+-- 4. Listem os cursos que ainda não possuem nenhum aluno matriculado.
+
+
