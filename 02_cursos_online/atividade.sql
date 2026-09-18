@@ -67,7 +67,9 @@ INSERT INTO dbo.instrutores (nome_instrutor, especialidade) VALUES
 ('Jane Goodall', 'Primatologia e Antropologia'),
 ('Alan Turing', 'Matemática e Ciência da Computação'),
 ('Gregor Mendel', 'Genética e Botânica'),
-('Galileu Galilei', 'Astronomia e Física');
+('Galileu Galilei', 'Astronomia e Física'),
+('Frank Rosenblatt', 'Psicólogo'),
+('Julius Robert Oppenheimer', 'Física e Matemática');
 
 INSERT INTO dbo.alunos (nome_aluno, email) VALUES
 ('Mônica', 'monica.donadaruas@limoeiro.com.mx'),
@@ -217,5 +219,51 @@ GROUP BY alunos.nome_aluno
 HAVING COUNT(*) > 1
 ORDER BY qtde_curso DESC;
 
--- 8. Contem quantos instrutores existem para cada especialidade.
+-- 8. Contar quantos instrutores existem para cada especialidade.
 
+SELECT instrutores.especialidade, 
+COUNT(*) AS "Qtde instrutor"
+FROM instrutores
+GROUP BY instrutores.especialidade
+ORDER BY "Qtde instrutor", instrutores.especialidade;
+
+-- 9. Mostrar os 3 cursos com mais alunos matriculados, em ordem decrescente de quantidade.
+
+SELECT TOP(3)  cursos.nome_curso, count(*) AS "Qtde matricula"
+FROM matriculas
+INNER JOIN cursos
+ON cursos.id_curso = matriculas.id_curso
+GROUP BY cursos.nome_curso
+ORDER BY "Qtde matricula" DESC;
+
+-- 10. Listar os cursos cujo nome contenha a palavra "Python".
+
+SELECT cursos.nome_curso
+FROM cursos
+WHERE cursos.nome_curso LIKE '%_ython%';
+
+-- ❌ 11. Calculem a média de alunos matriculados por curso.
+
+
+SELECT matriculas.id_curso,
+count(matriculas.id_aluno)
+FROM matriculas
+GROUP BY matriculas.id_curso;
+
+
+-- Listem apenas os instrutores que lecionam mais de um curso.
+
+SELECT instrutores.nome_instrutor, COUNT(*) as qtde_curso
+FROM instrutores
+INNER JOIN cursos
+ON instrutores.id_instrutor = cursos.id_instrutor
+GROUP BY instrutores.nome_instrutor
+HAVING COUNT(*) > 1
+ORDER BY qtde_curso DESC;
+
+-- ❌ Mostrem as matrículas realizadas entre duas datas específicas (usando um intervalo de datas).
+
+SELECT id_matricula, data_matricula
+FROM matriculas
+WHERE data_matricula BETWEEN '2026-01-01' AND '2026-12-30'
+ORDER BY data_matricula ASC;
