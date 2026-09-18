@@ -83,3 +83,38 @@ GROUP BY Fornecedores.cidade
 ORDER BY qtde_fornecedores DESC;
 
 select * from Fornecedores;
+
+-- Cláusula having
+
+-- Exibir a soma da quantidade produtos em estoque por categoria, desde que a qtde seja maior que 200
+
+select Produtos.categoria_produto,
+sum(Produtos.qtde_estoque_produto) as "Soma qtde. produtos estoque"
+from Produtos
+group by Produtos.categoria_produto
+having sum(Produtos.qtde_estoque_produto) > 200;
+
+
+-- Cidade com mais de um fornecedor cadastrado
+
+select Fornecedores.cidade,
+count(*) qtde_fornecedores
+from Fornecedores
+group by Fornecedores.cidade
+having count(*) > 1
+order by qtde_fornecedores DESC;
+
+-- Exibir a quantidade de produtos por categoria, que custam mais de R$ 1,00
+-- O total em estoque de cada categoria,
+-- mostrando primeiro a quantidade de produto com mais estoque.
+
+select * from Produtos;
+
+select Produtos.categoria_produto,
+Produtos.nome_produto,
+count(*) as qtde_produtos,
+sum(Produtos.qtde_estoque_produto) as qtde_estoque
+from Produtos
+where Produtos.preco_uni_produto > 1
+group by Produtos.categoria_produto, Produtos.nome_produto
+order by qtde_produtos DESC;
