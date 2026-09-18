@@ -4,13 +4,15 @@
 select suser_sname();
 -- sa --
 
-create database universidade;
+CREATE DATABASE cursos_online;
 
-use universidade;
+CREATE LOGIN dev WITH PASSWORD = 'ABC123xyz';
 
-create user tux for login tux;
+USE cursos_online;
 
-alter role db_owner add member tux;
+CREATE USER dev FOR LOGIN dev;
+
+ALTER ROLE db_owner ADD MEMBER dev;
 
 -- -------------------------------
 
