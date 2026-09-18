@@ -1,3 +1,6 @@
+
+<img src="https://www.datasunrise.com/wp-content/uploads/2025/03/Microsoft-SQL-Server-Data-Governance.webp" width="50%">
+
 # ✅ Atividade de avaliação
 
 **Tipo:** Atividade
