@@ -117,7 +117,8 @@ INSERT INTO matriculas (id_curso, id_aluno) VALUES
 (11, 10003),
 (2, 10008),
 (9, 10004),
-(9, 10009);
+(9, 10009),
+(13, 10006);
 
 
 -- Obs.: Integridade referencial: Todo aluno inserido em matriculas, precisa previamente existir na tabela Alunos.
@@ -168,4 +169,53 @@ ORDER BY "Qtde cursos" DESC;
 
 -- 4. Listem os cursos que ainda não possuem nenhum aluno matriculado.
 
+SELECT cursos.id_curso,
+cursos.nome_curso,
+matriculas.id_curso AS "id_curso em matriculas"
+FROM cursos
+LEFT JOIN matriculas
+ON cursos.id_curso = matriculas.id_curso
+WHERE matriculas.id_curso IS NULL
+ORDER BY cursos.id_curso;
+
+
+-- 5. Mostre a quantidade de alunos matriculados por instrutor, agrupando os resultados por instrutor.
+
+SELECT instrutores.nome_instrutor, 
+COUNT(matriculas.id_aluno) AS "qtde matriculas"
+FROM instrutores
+INNER JOIN cursos
+ON instrutores.id_instrutor = cursos.id_instrutor
+INNER JOIN matriculas
+ON cursos.id_curso = matriculas.id_curso
+GROUP BY instrutores.nome_instrutor
+ORDER BY "qtde matriculas" ASC;
+
+-- 6. Identifique o curso com o maior número de matrículas.
+
+select top(1) matriculas.id_curso, count(*) as qtde
+from matriculas
+group by matriculas.id_curso
+order by qtde DESC;
+
+-- Versão final
+
+select top(1) cursos.nome_curso, count(*) as qtde_matricula
+from matriculas
+INNER JOIN cursos
+ON cursos.id_curso = matriculas.id_curso
+group by cursos.nome_curso
+order by qtde_matricula DESC;
+
+-- 7. Listar os alunos que estão matriculados em mais de um curso.
+
+SELECT alunos.nome_aluno, COUNT(*) AS qtde_curso
+FROM matriculas
+INNER JOIN alunos
+ON alunos.id_aluno = matriculas.id_aluno
+GROUP BY alunos.nome_aluno
+HAVING COUNT(*) > 1
+ORDER BY qtde_curso DESC;
+
+-- 8. Contem quantos instrutores existem para cada especialidade.
 
