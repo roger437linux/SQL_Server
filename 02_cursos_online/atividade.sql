@@ -136,7 +136,7 @@ SELECT TOP(5) * FROM cursos;
 SELECT TOP(5) * FROM matriculas
 
 
--- 1. Contem quantos alunos estão matriculados em cada curso.
+-- 1. Contar quantos alunos estão matriculados em cada curso.
 
 SELECT matriculas.id_curso, 
 COUNT(*) as qtde_alunos
@@ -159,9 +159,9 @@ ORDER BY "Qtde matriculas" DESC;
 SELECT COUNT(*) AS "Total matriculas" FROM matriculas
 
 
--- 3. Encontrem o instrutor responsável pelo maior número de cursos.
+-- 3. Encontrar o instrutor responsável pelo maior número de cursos.
 
-SELECT instrutores.nome_instrutor AS "Instrutor", 
+SELECT TOP(1) instrutores.nome_instrutor AS "Instrutor", 
 COUNT(*) AS "Qtde cursos"
 FROM cursos
 INNER JOIN instrutores
@@ -169,7 +169,7 @@ ON instrutores.id_instrutor = cursos.id_instrutor
 GROUP BY instrutores.nome_instrutor
 ORDER BY "Qtde cursos" DESC;
 
--- 4. Listem os cursos que ainda não possuem nenhum aluno matriculado.
+-- 4. Listar os cursos que ainda não possuem nenhum aluno matriculado.
 
 SELECT cursos.id_curso,
 cursos.nome_curso,
@@ -181,7 +181,7 @@ WHERE matriculas.id_curso IS NULL
 ORDER BY cursos.id_curso;
 
 
--- 5. Mostre a quantidade de alunos matriculados por instrutor, agrupando os resultados por instrutor.
+-- 5. Mostrar a quantidade de alunos matriculados por instrutor, agrupando os resultados por instrutor.
 
 SELECT instrutores.nome_instrutor, 
 COUNT(matriculas.id_aluno) AS "qtde matriculas"
@@ -217,7 +217,7 @@ INNER JOIN alunos
 ON alunos.id_aluno = matriculas.id_aluno
 GROUP BY alunos.nome_aluno
 HAVING COUNT(*) > 1
-ORDER BY qtde_curso DESC;
+ORDER BY qtde_curso DESC, alunos.nome_aluno ASC;
 
 -- 8. Contar quantos instrutores existem para cada especialidade.
 
@@ -225,7 +225,7 @@ SELECT instrutores.especialidade,
 COUNT(*) AS "Qtde instrutor"
 FROM instrutores
 GROUP BY instrutores.especialidade
-ORDER BY "Qtde instrutor", instrutores.especialidade;
+ORDER BY "Qtde instrutor" DESC, instrutores.especialidade ASC;
 
 -- 9. Mostrar os 3 cursos com mais alunos matriculados, em ordem decrescente de quantidade.
 
@@ -261,9 +261,9 @@ GROUP BY instrutores.nome_instrutor
 HAVING COUNT(*) > 1
 ORDER BY qtde_curso DESC;
 
--- ❌ Mostrem as matrículas realizadas entre duas datas específicas (usando um intervalo de datas).
+-- Mostrem as matrículas realizadas entre duas datas específicas (usando um intervalo de datas).
 
 SELECT id_matricula, data_matricula
 FROM matriculas
-WHERE data_matricula BETWEEN '2026-01-01' AND '2026-12-30'
+WHERE data_matricula BETWEEN '2026-07-01' AND GETDATE()
 ORDER BY data_matricula ASC;

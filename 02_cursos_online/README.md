@@ -1,5 +1,5 @@
 
-<br><img src="./cursos_online.svg" width="50%"><br><br><br>
+<br><img src="./cursos_online.png" width="50%"><br><br><br>
 
 # ✅ Atividade de avaliação
 
