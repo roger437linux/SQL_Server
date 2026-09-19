@@ -252,7 +252,7 @@ FROM (
 ) AS subquery_matriculas;
 
 
--- Listem apenas os instrutores que lecionam mais de um curso.
+-- 12. Listem apenas os instrutores que lecionam mais de um curso.
 
 SELECT instrutores.nome_instrutor, COUNT(*) as qtde_curso
 FROM instrutores
@@ -262,7 +262,7 @@ GROUP BY instrutores.nome_instrutor
 HAVING COUNT(*) > 1
 ORDER BY qtde_curso DESC;
 
--- Mostrem as matrículas realizadas entre duas datas específicas (usando um intervalo de datas).
+-- 13. Mostrem as matrículas realizadas entre duas datas específicas (usando um intervalo de datas).
 
 SELECT id_matricula, data_matricula
 FROM matriculas
