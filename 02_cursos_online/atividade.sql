@@ -242,13 +242,14 @@ SELECT cursos.nome_curso
 FROM cursos
 WHERE cursos.nome_curso LIKE '%_ython%';
 
--- ❌ 11. Calculem a média de alunos matriculados por curso.
+-- 11. Calcular a média de alunos matriculados por curso.
 
-
-SELECT matriculas.id_curso,
-count(matriculas.id_aluno)
-FROM matriculas
-GROUP BY matriculas.id_curso;
+SELECT AVG(CAST(total_alunos AS DECIMAL(10,2))) AS media_alunos_curso
+FROM (
+    SELECT COUNT(*) AS total_alunos
+    FROM matriculas
+    GROUP BY matriculas.id_curso
+) AS subquery_matriculas;
 
 
 -- Listem apenas os instrutores que lecionam mais de um curso.
