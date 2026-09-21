@@ -20,6 +20,9 @@ ALTER ROLE db_owner ADD MEMBER dev;
 
 USE cursos_online;
 
+SELECT DB_NAME();
+
+
 -- ------------- Criar as tabelas -------------
 
 CREATE TABLE instrutores (
@@ -153,21 +156,45 @@ ON matriculas.id_curso = cursos.id_curso
 GROUP BY matriculas.id_curso, cursos.nome_curso
 ORDER BY "Qtde matriculas" DESC;
 
+-- Com subquery
 
--- 2. Calculem o total de matrículas registradas em todo o banco de dados.
+SELECT (
+    SELECT cursos.nome_curso FROM cursos
+    WHERE cursos.id_curso = matriculas.id_curso 
+) AS "Nome curso", 
+COUNT(matriculas.id_curso) AS "Qtde alunos"
+FROM matriculas
+GROUP BY matriculas.id_curso
+ORDER BY "Qtde alunos" DESC;    
+
+
+-- 2. Calcular o total de matrículas registradas em todo o banco de dados.
 
 SELECT COUNT(*) AS "Total matriculas" FROM matriculas
 
 
 -- 3. Encontrar o instrutor responsável pelo maior número de cursos.
 
-SELECT TOP(1) instrutores.nome_instrutor AS "Instrutor", 
+SELECT TOP(3) instrutores.nome_instrutor AS "Instrutor", 
 COUNT(*) AS "Qtde cursos"
 FROM cursos
 INNER JOIN instrutores
 ON instrutores.id_instrutor = cursos.id_instrutor
 GROUP BY instrutores.nome_instrutor
 ORDER BY "Qtde cursos" DESC;
+
+
+-- Subquery
+
+SELECT TOP(2) (
+	SELECT instrutores.nome_instrutor FROM instrutores
+	WHERE instrutores.id_instrutor = cursos.id_instrutor	
+) AS nome,
+COUNT(cursos.id_curso) AS qtde
+FROM cursos
+GROUP BY cursos.id_instrutor
+ORDER BY qtde DESC, nome ASC;
+
 
 -- 4. Listar os cursos que ainda não possuem nenhum aluno matriculado.
 
