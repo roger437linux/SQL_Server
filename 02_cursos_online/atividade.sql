@@ -218,7 +218,23 @@ ON instrutores.id_instrutor = cursos.id_instrutor
 INNER JOIN matriculas
 ON cursos.id_curso = matriculas.id_curso
 GROUP BY instrutores.nome_instrutor
-ORDER BY "qtde matriculas" ASC;
+ORDER BY "qtde matriculas" DESC;
+
+-- Subquery
+
+SELECT i.nome_instrutor,
+(
+    SELECT COUNT(m.id_matricula)
+    FROM matriculas m
+    WHERE m.id_curso IN (
+        SELECT c.id_curso
+        FROM cursos c
+        WHERE c.id_instrutor = i.id_instrutor
+    )
+) AS "Qtde alunos"
+FROM instrutores i
+ORDER BY "Qtde alunos" DESC;
+
 
 -- 6. Identifique o curso com o maior número de matrículas.
 
@@ -229,12 +245,24 @@ order by qtde DESC;
 
 -- Versão final
 
-select top(1) cursos.nome_curso, count(*) as qtde_matricula
+select top(10) cursos.nome_curso, count(*) as qtde_matricula
 from matriculas
 INNER JOIN cursos
 ON cursos.id_curso = matriculas.id_curso
 group by cursos.nome_curso
 order by qtde_matricula DESC;
+
+-- Subquery
+
+SELECT TOP(2) (
+	SELECT cursos.nome_curso FROM cursos
+	WHERE cursos.id_curso = matriculas.id_curso
+) AS "Curso",
+COUNT(*) AS "Qtde matriculas"
+FROM matriculas
+GROUP BY matriculas.id_curso
+ORDER BY "Qtde matriculas" DESC;
+
 
 -- 7. Listar os alunos que estão matriculados em mais de um curso.
 
@@ -246,6 +274,18 @@ GROUP BY alunos.nome_aluno
 HAVING COUNT(*) > 1
 ORDER BY qtde_curso DESC, alunos.nome_aluno ASC;
 
+-- Subquery
+
+SELECT (
+	select alunos.nome_aluno FROM alunos
+	WHERE alunos.id_aluno = matriculas.id_aluno
+) AS "Aluno",
+COUNT(matriculas.id_curso) AS "Qtde matricula"
+FROM matriculas
+GROUP BY matriculas.id_aluno
+ORDER BY "Qtde matricula" DESC, "Aluno" ASC;
+
+
 -- 8. Contar quantos instrutores existem para cada especialidade.
 
 SELECT instrutores.especialidade, 
@@ -254,20 +294,35 @@ FROM instrutores
 GROUP BY instrutores.especialidade
 ORDER BY "Qtde instrutor" DESC, instrutores.especialidade ASC;
 
+
 -- 9. Mostrar os 3 cursos com mais alunos matriculados, em ordem decrescente de quantidade.
 
-SELECT TOP(3)  cursos.nome_curso, count(*) AS "Qtde matricula"
+SELECT TOP(30)  cursos.nome_curso AS "Curso", count(*) AS "Qtde matricula"
 FROM matriculas
 INNER JOIN cursos
 ON cursos.id_curso = matriculas.id_curso
 GROUP BY cursos.nome_curso
-ORDER BY "Qtde matricula" DESC;
+ORDER BY "Qtde matricula" DESC, "Curso" ASC;
+
+-- Subquery
+
+select (
+	SELECT cursos.nome_curso
+	FROM cursos
+	WHERE cursos.id_curso = matriculas.id_curso
+) AS curso,
+COUNT(*) AS qtde_matriculas
+FROM matriculas
+GROUP BY matriculas.id_curso
+ORDER BY qtde_matriculas DESC, curso ASC;
+
 
 -- 10. Listar os cursos cujo nome contenha a palavra "Python".
 
 SELECT cursos.nome_curso
 FROM cursos
 WHERE cursos.nome_curso LIKE '%_ython%';
+
 
 -- 11. Calcular a média de alunos matriculados por curso.
 
@@ -288,6 +343,7 @@ ON instrutores.id_instrutor = cursos.id_instrutor
 GROUP BY instrutores.nome_instrutor
 HAVING COUNT(*) > 1
 ORDER BY qtde_curso DESC;
+
 
 -- 13. Mostrem as matrículas realizadas entre duas datas específicas (usando um intervalo de datas).
 
