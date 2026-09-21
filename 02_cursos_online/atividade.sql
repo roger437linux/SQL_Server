@@ -326,12 +326,16 @@ WHERE cursos.nome_curso LIKE '%_ython%';
 
 -- 11. Calcular a média de alunos matriculados por curso.
 
-SELECT AVG(CAST(total_alunos AS DECIMAL(10,2))) AS media_alunos_curso
-FROM (
-    SELECT COUNT(*) AS total_alunos
-    FROM matriculas
-    GROUP BY matriculas.id_curso
-) AS subquery_matriculas;
+SELECT cursos.nome_curso, CAST(COUNT(*) /
+(
+	SELECT CAST(COUNT(*) AS NUMERIC(10,2))
+	FROM matriculas
+) * 100 AS NUMERIC(10,2)) AS "Média alunos %"
+FROM matriculas
+INNER JOIN cursos
+ON cursos.id_curso = matriculas.id_curso
+GROUP BY matriculas.id_curso, cursos.nome_curso
+ORDER BY "Média alunos %" DESC, cursos.nome_curso ASC;
 
 
 -- 12. Listem apenas os instrutores que lecionam mais de um curso.
@@ -343,6 +347,18 @@ ON instrutores.id_instrutor = cursos.id_instrutor
 GROUP BY instrutores.nome_instrutor
 HAVING COUNT(*) > 1
 ORDER BY qtde_curso DESC;
+
+-- Subquery
+
+SELECT (
+	SELECT instrutores.nome_instrutor FROM instrutores
+	WHERE instrutores.id_instrutor = cursos.id_instrutor
+) AS "Instrutor",
+COUNT(*) AS qtde_curso
+FROM cursos
+GROUP BY cursos.id_instrutor
+HAVING COUNT(*) > 1
+ORDER BY qtde_curso DESC, "Instrutor" ASC;
 
 
 -- 13. Mostrem as matrículas realizadas entre duas datas específicas (usando um intervalo de datas).
