@@ -334,7 +334,7 @@ SELECT cursos.nome_curso, CAST(COUNT(*) /
 FROM matriculas
 INNER JOIN cursos
 ON cursos.id_curso = matriculas.id_curso
-GROUP BY matriculas.id_curso, cursos.nome_curso
+GROUP BY cursos.nome_curso
 ORDER BY "Média alunos %" DESC, cursos.nome_curso ASC;
 
 
