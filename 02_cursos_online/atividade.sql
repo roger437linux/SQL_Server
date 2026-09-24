@@ -153,8 +153,8 @@ COUNT(*) AS "Qtde matriculas"
 FROM matriculas
 INNER JOIN cursos
 ON matriculas.id_curso = cursos.id_curso
-GROUP BY matriculas.id_curso, cursos.nome_curso
-ORDER BY "Qtde matriculas" DESC;
+GROUP BY cursos.nome_curso
+ORDER BY "Qtde matriculas" DESC, "Curso" ASC;
 
 -- Com subquery
 
