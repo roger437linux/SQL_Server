@@ -136,7 +136,7 @@ INSERT INTO matriculas (id_curso, id_aluno) VALUES
 SELECT TOP(5) * FROM instrutores;
 SELECT TOP(5) * FROM alunos;
 SELECT TOP(5) * FROM cursos;
-SELECT TOP(5) * FROM matriculas
+SELECT TOP(5) * FROM matriculas;
 
 
 -- 1. Contar quantos alunos estão matriculados em cada curso.
@@ -198,9 +198,11 @@ ORDER BY qtde DESC, nome ASC;
 
 -- 4. Listar os cursos que ainda não possuem nenhum aluno matriculado.
 
-SELECT cursos.id_curso,
-cursos.nome_curso,
-matriculas.id_curso AS "id_curso em matriculas"
+SELECT cursos.nome_curso,
+CASE
+	WHEN matriculas.id_curso IS NULL		THEN 'Sem registro'
+	WHEN matriculas.id_curso IS NOT NULL	THEN 'Registrada'
+END AS "Matricula"
 FROM cursos
 LEFT JOIN matriculas
 ON cursos.id_curso = matriculas.id_curso
