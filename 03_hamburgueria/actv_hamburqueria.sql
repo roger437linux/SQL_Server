@@ -22,20 +22,29 @@ USE hamburgueria;
 SELECT DB_NAME();
 
 
+-- Apaga as tabelas na ordem inversa das chaves estrangeiras
+DROP TABLE IF EXISTS ItensPedido;
+DROP TABLE IF EXISTS Pedidos;
+DROP TABLE IF EXISTS Produtos;
+DROP TABLE IF EXISTS Entregadores;
+DROP TABLE IF EXISTS Clientes;
+
+
+
 -- ------------- Criar as tabelas -------------
 
 
 CREATE TABLE clientes (
-    id_cliente INT IDENTITY(10001, 1) PRIMARY KEY,
+    id_cliente INT PRIMARY KEY,
     nome varchar(100) NOT NULL,
     bairro varchar(100) NOT NULL,
-    fone varchar(10) NULL,
-    data_cadastro DATE NOT NULL DEFAULT(GETDATE())
+    fone varchar(20) NULL,
+    data_cadastro DATE NOT NULL
 );
 
 
 create table produtos (
-    id_produto INT IDENTITY(1001, 1) PRIMARY KEY,
+    id_produto INT PRIMARY KEY,
     nome_produto VARCHAR(100) NOT NULL,
     categoria VARCHAR(200) NOT NULL,
     preco DECIMAL(10, 2) NOT NULL CHECK (preco > 0)
@@ -43,24 +52,24 @@ create table produtos (
 
 
 CREATE TABLE entregadores (
-    id_entregador INT IDENTITY(101, 1) PRIMARY KEY,
+    id_entregador INT PRIMARY KEY,
     nome_entregador VARCHAR(100) NOT NULL,
-    veiculo VARCHAR(100) NOT NULL,
-    data_contratacao DATE NOT NULL DEFAULT (GETDATE())
+    veiculo VARCHAR(20) NOT NULL,
+    data_contratacao DATE NOT NULL,
+    CONSTRAINT CK_Entregadores_veiculo CHECK (veiculo IN ('bicicleta', 'moto') )
 );
 
 CREATE TABLE pedidos (
-    id_pedido INT IDENTITY(1, 1) PRIMARY KEY,
+    id_pedido INT PRIMARY KEY,
     id_cliente INT NOT NULL,
     id_entregador INT NULL,
-    data_pedido DATE NOT NULL DEFAULT (GETDATE()),
-    tipo_entrega VARCHAR(10) NOT NULL 
-        CONSTRAINT CK_Pedidos_tipo_entrega  CHECK (tipo_entrega IN ('delivery', 'balcao')),
-    estado  VARCHAR(10) NOT NULL
-        CONSTRAINT CK_Pedidos_estado        CHECK (estado IN ('entregue', 'cancelado')),
-    taxa_entrega DECIMAL(10, 2) NOT NULL DEFAULT(0),        
+    data_pedido DATE NOT NULL,
+    tipo_entrega VARCHAR(10) NOT NULL,        
+    status VARCHAR(20) NOT NULL,        
+    taxa_entrega DECIMAL(10, 2) NOT NULL DEFAULT(0.0),        
     avaliacao TINYINT NULL,
-        CONSTRAINT CK_Pedidos_Taxa_Balcao CHECK ( (tipo_entrega = 'balcao' AND taxa_entrega = 0) OR  (tipo_entrega = 'delivery') ),
+        CONSTRAINT CK_Pedidos_tipo_entrega  CHECK (tipo_entrega IN ('delivery', 'retirada')),
+        CONSTRAINT CK_Pedidos_estado        CHECK (status IN ('entregue', 'cancelado')),
         CONSTRAINT FK_Pedidos_Cliente       FOREIGN KEY (id_cliente)    REFERENCES clientes (id_cliente),
         CONSTRAINT FK_Pedidos_Entregador    FOREIGN KEY (id_entregador) REFERENCES entregadores (id_entregador)
 );
@@ -69,50 +78,44 @@ CREATE TABLE pedidos (
 CREATE TABLE itenspedido (
     id_pedido INT NOT NULL,
     id_produto INT NOT NULL,
-    qtde INT NOT NULL CHECK (qtde > 0),
+    quantidade INT NOT NULL CHECK (quantidade > 0),
     preco DECIMAL(10, 2) NOT NULL CHECK (preco > 0),
     PRIMARY KEY (id_pedido, id_produto),
-    CONSTRAINT FK_Itenspedido_Pedido     FOREIGN KEY (id_pedido)    REFERENCES pedidos (id_pedido),
-    CONSTRAINT FK_Itenspedido_Produto   FOREIGN KEY (id_produto)    REFERENCES produtos (id_produto)
+    CONSTRAINT FK_Itenspedido_Pedido   FOREIGN KEY (id_pedido)  REFERENCES pedidos (id_pedido),
+    CONSTRAINT FK_Itenspedido_Produto  FOREIGN KEY (id_produto) REFERENCES produtos (id_produto)
 );
 
-SELECT * FROM clientes;
-SELECT * FROM produtos;
-SELECT * FROM entregadores;
-SELECT * FROM pedidos;
-SELECT * FROM itenspedido;
+
+-- ------------------------------------------------------------------------
 
 
--- --------------------------------------------
+INSERT INTO clientes (id_cliente, nome, bairro, fone, data_cadastro) VALUES
+    (1, 'Ana Beatriz Souza', 'Centro', '(11) 98811-2034', '2025-11-03'),
+    (2, 'Bruno Carvalho', 'Jardim América', '(11) 97722-4410', '2025-11-10'),
+    (3, 'Camila Ferreira', 'Vila Nova', '(11) 96633-1298', '2025-11-15'),
+    (4, 'Diego Martins', 'Centro', NULL, '2025-11-20'),
+    (5, 'Eduarda Lima', 'Boa Vista', '(11) 95544-7781', '2025-12-01'),
+    (6, 'Felipe Rocha', 'São José', '(11) 94455-3302', '2025-12-05'),
+    (7, 'Gabriela Nunes', 'Jardim América', '(11) 93366-9015', '2025-12-12'),
+    (8, 'Henrique Alves', 'Vila Nova', '(11) 92277-6643', '2025-12-18'),
+    (9, 'Isabela Castro', 'Centro', '(11) 91188-5520', '2026-01-04'),
+    (10, 'João Pedro Ribeiro', 'Boa Vista', NULL, '2026-01-09'),
+    (11, 'Larissa Mendes', 'São José', '(11) 98899-1107', '2026-01-15'),
+    (12, 'Marcos Vinícius Dias', 'Centro', '(11) 97788-3319', '2026-01-22'),
+    (13, 'Natália Freitas', 'Vila Nova', '(11) 96677-2280', '2026-02-02'),
+    (14, 'Otávio Barros', 'Jardim América', '(11) 95566-4471', '2026-02-14'),
+    (15, 'Paula Teixeira', 'Boa Vista', '(11) 94455-8862', '2026-03-01'),
+    (16, 'Rafael Moura', 'São José', '(11) 93344-1195', '2026-03-10');
 
 
-INSERT INTO clientes (nome, bairro, fone, data_cadastro) VALUES
-    ('Ana Beatriz Souza', 'Centro', '(11) 98811-2034', '2025-11-03'),
-    ('Bruno Carvalho', 'Jardim América', '(11) 97722-4410', '2025-11-10'),
-    ('Camila Ferreira', 'Vila Nova', '(11) 96633-1298', '2025-11-15'),
-    ('Diego Martins', 'Centro', NULL, '2025-11-20'),
-    ('Eduarda Lima', 'Boa Vista', '(11) 95544-7781', '2025-12-01'),
-    ('Felipe Rocha', 'São José', '(11) 94455-3302', '2025-12-05'),
-    ('Gabriela Nunes', 'Jardim América', '(11) 93366-9015', '2025-12-12'),
-    ('Henrique Alves', 'Vila Nova', '(11) 92277-6643', '2025-12-18'),
-    ('Isabela Castro', 'Centro', '(11) 91188-5520', '2026-01-04'),
-    ('João Pedro Ribeiro', 'Boa Vista', NULL, '2026-01-09'),
-    ('Larissa Mendes', 'São José', '(11) 98899-1107', '2026-01-15'),
-    ('Marcos Vinícius Dias', 'Centro', '(11) 97788-3319', '2026-01-22'),
-    ('Natália Freitas', 'Vila Nova', '(11) 96677-2280', '2026-02-02'),
-    ('Otávio Barros', 'Jardim América', '(11) 95566-4471', '2026-02-14'),
-    ('Paula Teixeira', 'Boa Vista', '(11) 94455-8862', '2026-03-01'),
-    ('Rafael Moura', 'São José', '(11) 93344-1195', '2026-03-10');
-
-
-INSERT INTO Entregadores (IdEntregador, Nome, Veiculo, DataContratacao) VALUES
+INSERT INTO entregadores (id_entregador, nome_entregador, veiculo, data_contratacao) VALUES
     (1, 'Carlos Eduardo', 'Moto', '2025-10-01'),
     (2, 'Rafaela Santos', 'Moto', '2025-10-01'),
     (3, 'Diego Oliveira', 'Bicicleta', '2025-11-15'),
     (4, 'Juliana Prado', 'Moto', '2026-01-05'),
     (5, 'Mateus Gomes', 'Bicicleta', '2026-03-20');
 
-INSERT INTO Produtos (IdProduto, NomeProduto, Categoria, Preco) VALUES
+INSERT INTO produtos (id_produto, nome_produto, categoria, preco) VALUES
     (1, 'Brasa Clássico', 'Hambúrguer', 28.00),
     (2, 'X-Bacon', 'Hambúrguer', 34.00),
     (3, 'Smash Duplo', 'Hambúrguer', 36.00),
@@ -128,7 +131,7 @@ INSERT INTO Produtos (IdProduto, NomeProduto, Categoria, Preco) VALUES
     (13, 'Milkshake de Ovomaltine', 'Sobremesa', 19.00),
     (14, 'Brownie com Sorvete', 'Sobremesa', 15.00);
 
-INSERT INTO Pedidos (IdPedido, IdCliente, IdEntregador, DataPedido, TipoEntrega, Status, TaxaEntrega, Avaliacao) VALUES
+INSERT INTO pedidos (id_pedido, id_cliente, id_entregador, data_pedido, tipo_entrega, status, taxa_entrega, avaliacao) VALUES
     (1, 8, 1, '2026-01-02', 'Delivery', 'Entregue', 6.00, 4),
     (2, 5, 1, '2026-01-03', 'Delivery', 'Entregue', 8.00, 3),
     (3, 8, NULL, '2026-01-04', 'Retirada', 'Entregue', 0.00, 4),
@@ -170,7 +173,7 @@ INSERT INTO Pedidos (IdPedido, IdCliente, IdEntregador, DataPedido, TipoEntrega,
     (39, 15, 2, '2026-03-26', 'Delivery', 'Entregue', 8.00, NULL),
     (40, 1, 3, '2026-03-27', 'Delivery', 'Entregue', 5.00, 3);
 
-INSERT INTO ItensPedido (IdPedido, IdProduto, Quantidade, PrecoUnitario) VALUES
+INSERT INTO ItensPedido (id_pedido, id_produto, quantidade, preco) VALUES
     (1, 1, 3, 28.00),
     (2, 3, 1, 36.00),
     (2, 5, 1, 29.00),
@@ -262,3 +265,15 @@ INSERT INTO ItensPedido (IdPedido, IdProduto, Quantidade, PrecoUnitario) VALUES
     (39, 4, 1, 30.00),
     (39, 6, 1, 45.00),
     (40, 3, 1, 36.00);
+
+    
+/* ---------------------------------------------------------------------------
+   3. CONFERÊNCIA - se tudo deu certo, o resultado deve ser:
+      Clientes 16 | Entregadores 5 | Produtos 14 | Pedidos 40 | ItensPedido 91
+------------------------------------------------------------------------------ */
+
+SELECT 'Clientes' AS Tabela, COUNT(*) AS Linhas FROM Clientes
+UNION ALL SELECT 'Entregadores', COUNT(*) FROM Entregadores
+UNION ALL SELECT 'Produtos', COUNT(*) FROM Produtos
+UNION ALL SELECT 'Pedidos', COUNT(*) FROM Pedidos
+UNION ALL SELECT 'ItensPedido', COUNT(*) FROM ItensPedido;
