@@ -129,3 +129,14 @@ group by month(pedidos.data_pedido);
 -- de pelo menos 4. Quem se qualifica? Mostre as entregas e a nota média (com decimais).
 
 
+select 
+    entregadores.nome_entregador,
+    count(pedidos.id_pedido) as qtde_entregas,
+    avg(pedidos.avaliacao) as nota_media
+from entregadores
+inner join pedidos
+on entregadores.id_entregador = pedidos.id_entregador
+where pedidos.status = 'Entregue'
+group by entregadores.nome_entregador;
+
+
