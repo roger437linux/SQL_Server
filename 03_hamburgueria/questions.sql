@@ -142,3 +142,6 @@ HAVING COUNT(pedidos.id_pedido) >= 4
 AND AVG(pedidos.avaliacao) >= 4
 ORDER BY qtde_entregas DESC, nota_media DESC;
 
+
+-- Q15. Mostre o valor total de cada pedido entregue em março (produtos + taxa de entrega), 
+-- com o nome do cliente, do maior para o menor.
