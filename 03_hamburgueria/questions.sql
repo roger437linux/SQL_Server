@@ -1,24 +1,24 @@
 
 -- Q1. A Dona Marta quer saber quantos clientes cadastrados moram no bairro Centro.
 
-select * from clientes
-where bairro = 'Centro'
-order by nome asc;
+SELECT * FROM clientes
+WHERE bairro = 'Centro'
+ORDER BY nome ASC;
 
 -- Q2. Liste o nome e o preço dos produtos da categoria Hambúrguer que custam 
 -- mais de R$ 30,00, do mais caro para o mais barato.
 
-select nome_produto, preco from produtos
-where categoria like '%_amb_rguer%' and preco > 30
-order by preco desc;
+SELECT nome_produto, preco FROM produtos
+WHERE categoria LIKE '%_amb_rguer%' AND preco > 30
+ORDER BY preco DESC;
 
 -- Q3. Quantos pedidos foram entregues e quantos foram cancelados no trimestre? 
 -- Mostre as duas contagens numa consulta só.
 
-select status, count(*) as qtde_pedidos
-from pedidos
-group by status
-order by status desc;
+SELECT STATUS, COUNT(*) AS qtde_pedidos
+FROM pedidos
+GROUP BY STATUS
+ORDER BY STATUS DESC;
 
 -- Q4. Considerando só os pedidos entregues: quantos foram, quantos receberam avaliação, 
 -- quantos ficaram sem avaliação e qual a nota média (com casas decimais)?
@@ -47,8 +47,6 @@ ORDER BY MONTH(data_pedido) ASC;
 
 -- Q6. Liste todos os pedidos de janeiro de 2026 com número do pedido, data, 
 -- nome do cliente, bairro e status, em ordem de data.
-
-select top(5) * from pedidos;
 
 select p.id_pedido AS "Número pedido", 
 p.data_pedido AS "Data pedido", 
@@ -84,12 +82,48 @@ ON p.id_produto = i.id_produto
 GROUP BY p.nome_produto, p.preco
 ORDER BY "Qtde vendida" DESC;
 
+
 -- Q9. Qual o faturamento de produtos por categoria, da maior para a menor?
+
+SELECT
+    p.categoria,
+    SUM(i.quantidade * i.preco) AS faturamento
+FROM produtos AS p
+INNER JOIN itenspedido AS i
+    ON i.id_produto = p.id_produto
+GROUP BY
+    p.categoria
+ORDER BY
+    faturamento DESC;
 
 -- Q10. Em quais bairros houve pelo menos 7 pedidos entregues? Mostre o bairro e a quantidade.
 
+SELECT
+    c.bairro,
+    COUNT(p.id_pedido) AS quantidade_pedidos
+FROM clientes AS c
+INNER JOIN pedidos AS p
+    ON p.id_cliente = c.id_cliente
+WHERE p.status = 'entregue'
+GROUP BY
+    c.bairro
+HAVING COUNT(p.id_pedido) >= 7
+ORDER BY quantidade_pedidos DESC;
+
+
 -- Q11. O X-Bacon teve reajuste de preço durante o trimestre. Por quais preços ele foi vendido, 
 -- quantas unidades saíram a cada preço e quanto isso faturou?
+
+SELECT
+    i.preco,
+    SUM(i.quantidade) AS unidades_vendidas,
+    SUM(i.quantidade * i.preco) AS faturamento
+FROM produtos AS p
+INNER JOIN itenspedido AS i
+    ON i.id_produto = p.id_produto
+WHERE p.nome_produto = 'X-Bacon'
+GROUP BY i.preco
+ORDER BY i.preco;
 
 
 -- Q12. A Dona Marta vai criar um programa de fidelidade para os 3 clientes que mais 
@@ -145,3 +179,41 @@ ORDER BY qtde_entregas DESC, nota_media DESC;
 
 -- Q15. Mostre o valor total de cada pedido entregue em março (produtos + taxa de entrega), 
 -- com o nome do cliente, do maior para o menor.
+
+SELECT
+    p.id_pedido,
+    c.nome AS cliente,
+    SUM(i.quantidade * i.preco) + p.taxa_entrega AS valor_total
+FROM pedidos AS p
+INNER JOIN clientes AS c
+    ON c.id_cliente = p.id_cliente
+INNER JOIN itenspedido AS i
+    ON i.id_pedido = p.id_pedido
+WHERE p.status = 'entregue'
+  AND MONTH(p.data_pedido) = 3
+GROUP BY
+    p.id_pedido,
+    c.nome,
+    p.taxa_entrega
+ORDER BY
+    valor_total DESC;
+
+
+-- Q16. Há clientes que se cadastraram e nunca fizeram nenhum pedido. 
+-- Quem são e em que bairro moram? O que isso sugere para a Dona Marta?
+
+SELECT clientes.nome, clientes.bairro
+FROM clientes
+LEFT JOIN pedidos
+ON clientes.id_cliente = pedidos.id_cliente
+WHERE pedidos.id_cliente IS NULL
+ORDER BY clientes.nome ASC;
+
+-- Q17. Existe algum produto do cardápio que nunca apareceu em nenhum pedido, 
+-- nem cancelado? Ele é candidato a sair do cardápio.
+
+SELECT produtos.nome_produto, itenspedido.id_produto
+FROM produtos
+LEFT JOIN itenspedido
+ON produtos.id_produto = itenspedido.id_produto
+WHERE itenspedido.id_produto IS NULL;
