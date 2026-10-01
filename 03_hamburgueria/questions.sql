@@ -129,14 +129,16 @@ group by month(pedidos.data_pedido);
 -- de pelo menos 4. Quem se qualifica? Mostre as entregas e a nota média (com decimais).
 
 
-select 
+SELECT 
     entregadores.nome_entregador,
-    count(pedidos.id_pedido) as qtde_entregas,
-    avg(pedidos.avaliacao) as nota_media
-from entregadores
-inner join pedidos
-on entregadores.id_entregador = pedidos.id_entregador
-where pedidos.status = 'Entregue'
-group by entregadores.nome_entregador;
-
+    COUNT(pedidos.id_pedido) AS qtde_entregas,
+    AVG(CAST(pedidos.avaliacao AS NUMERIC(5, 1))) AS nota_media
+FROM entregadores
+INNER JOIN pedidos
+ON entregadores.id_entregador = pedidos.id_entregador
+WHERE pedidos.status = 'Entregue'
+GROUP BY entregadores.nome_entregador
+HAVING COUNT(pedidos.id_pedido) >= 4 
+AND AVG(pedidos.avaliacao) >= 4
+ORDER BY qtde_entregas DESC, nota_media DESC;
 
