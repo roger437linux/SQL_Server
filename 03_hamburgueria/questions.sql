@@ -88,4 +88,44 @@ ORDER BY "Qtde vendida" DESC;
 
 -- Q10. Em quais bairros houve pelo menos 7 pedidos entregues? Mostre o bairro e a quantidade.
 
--- Agrupe pelo PrecoUnitario de ItensPedido. Depois compare com o preço que aparece em Produtos: por que são diferentes?
+-- Q11. O X-Bacon teve reajuste de preço durante o trimestre. Por quais preços ele foi vendido, 
+-- quantas unidades saíram a cada preço e quanto isso faturou?
+
+
+-- Q12. A Dona Marta vai criar um programa de fidelidade para os 3 clientes que mais 
+-- gastaram em produtos. Mostre o nome, quantos pedidos cada um fez e o total gasto.
+
+SELECT TOP(3)
+    c.nome AS cliente,
+    COUNT(DISTINCT p.id_pedido) AS quantidade_pedidos,
+    SUM(i.quantidade * i.preco) AS total_gasto
+FROM clientes AS c
+INNER JOIN pedidos AS p
+    ON p.id_cliente = c.id_cliente
+INNER JOIN itenspedido AS i
+    ON i.id_pedido = p.id_pedido
+GROUP BY
+    c.id_cliente,
+    c.nome
+ORDER BY
+    total_gasto DESC, quantidade_pedidos DESC;
+
+
+-- Q13. O faturamento de produtos cresceu ou caiu ao longo do trimestre? Mostre, para cada mês, 
+-- a quantidade de pedidos entregues e o faturamento de produtos.
+
+SELECT 
+    month(pedidos.data_pedido) as mes,
+    count(distinct(pedidos.id_pedido)) as "pedidos entregues",
+    sum(itenspedido.quantidade * itenspedido.preco) as faturamento
+from pedidos
+inner join itenspedido
+on pedidos.id_pedido = itenspedido.id_pedido
+where pedidos.status = 'Entregue'
+group by month(pedidos.data_pedido);
+
+
+-- Q14. O entregador do trimestre precisa ter feito pelo menos 4 entregas e ter nota média 
+-- de pelo menos 4. Quem se qualifica? Mostre as entregas e a nota média (com decimais).
+
+
