@@ -82,7 +82,6 @@ ON p.id_produto = i.id_produto
 GROUP BY p.nome_produto, p.preco
 ORDER BY "Qtde vendida" DESC;
 
-
 -- Q9. Qual o faturamento de produtos por categoria, da maior para a menor?
 
 SELECT
@@ -110,7 +109,6 @@ GROUP BY
 HAVING COUNT(p.id_pedido) >= 7
 ORDER BY quantidade_pedidos DESC;
 
-
 -- Q11. O X-Bacon teve reajuste de preço durante o trimestre. Por quais preços ele foi vendido, 
 -- quantas unidades saíram a cada preço e quanto isso faturou?
 
@@ -124,7 +122,6 @@ INNER JOIN itenspedido AS i
 WHERE p.nome_produto = 'X-Bacon'
 GROUP BY i.preco
 ORDER BY i.preco;
-
 
 -- Q12. A Dona Marta vai criar um programa de fidelidade para os 3 clientes que mais 
 -- gastaram em produtos. Mostre o nome, quantos pedidos cada um fez e o total gasto.
@@ -144,7 +141,6 @@ GROUP BY
 ORDER BY
     total_gasto DESC, quantidade_pedidos DESC;
 
-
 -- Q13. O faturamento de produtos cresceu ou caiu ao longo do trimestre? Mostre, para cada mês, 
 -- a quantidade de pedidos entregues e o faturamento de produtos.
 
@@ -158,10 +154,8 @@ on pedidos.id_pedido = itenspedido.id_pedido
 where pedidos.status = 'Entregue'
 group by month(pedidos.data_pedido);
 
-
 -- Q14. O entregador do trimestre precisa ter feito pelo menos 4 entregas e ter nota média 
 -- de pelo menos 4. Quem se qualifica? Mostre as entregas e a nota média (com decimais).
-
 
 SELECT 
     entregadores.nome_entregador,
@@ -175,7 +169,6 @@ GROUP BY entregadores.nome_entregador
 HAVING COUNT(pedidos.id_pedido) >= 4 
 AND AVG(pedidos.avaliacao) >= 4
 ORDER BY qtde_entregas DESC, nota_media DESC;
-
 
 -- Q15. Mostre o valor total de cada pedido entregue em março (produtos + taxa de entrega), 
 -- com o nome do cliente, do maior para o menor.
@@ -197,7 +190,6 @@ GROUP BY
     p.taxa_entrega
 ORDER BY
     valor_total DESC;
-
 
 -- Q16. Há clientes que se cadastraram e nunca fizeram nenhum pedido. 
 -- Quem são e em que bairro moram? O que isso sugere para a Dona Marta?
