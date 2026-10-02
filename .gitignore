@@ -1,3 +1,13 @@
-.vs
-*.suo
-*.user
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Banco
+.streamlit/secrets.toml
+
+# Virtual environments
+.venv
