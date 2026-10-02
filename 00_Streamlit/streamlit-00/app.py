@@ -1,5 +1,5 @@
 import streamlit as st
-from src.streamlit_sql.db import consultar
+from src.streamlit_00.db import consultar
 
 st.title("🍔 Hamburgueria")
 st.write("Teste de conexão com SQL Server")
@@ -10,8 +10,8 @@ if st.button("Testar conexão"):
         df = consultar("""
             SELECT
                 DB_NAME() AS banco,
-                @@SERVERNAME AS servidor,
-                SUSER_SNAME()
+                UPPER(@@SERVERNAME) AS servidor,
+                UPPER(SUSER_SNAME())
         """)
 
         st.success("✅ Conexão realizada com sucesso!")

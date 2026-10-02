@@ -1,6 +1,5 @@
 import streamlit as st
-import plotly.express as px
-from src.streamlit_sql.db import consultar
+from src.streamlit_01.db import consultar
 
 st.title("🍔 Database Hamburgueria")
 
@@ -19,28 +18,32 @@ def conexao():
 
 def queries():
 
-    #####################
-    #    Exercício 1    
-    #####################
-        
+    #    Exercício 1
+    #            
     q1 = '''
-        SELECT TOP(5) * FROM produtos
+        SELECT * FROM clientes
+        WHERE bairro = 'Centro'
+        ORDER BY nome ASC;
     '''
 
     if st.button("Query 1"):
+        st.write('A Dona Marta quer saber quantos clientes cadastrados moram no bairro Centro.')
         st.dataframe(consultar(q1), width="stretch", hide_index=True)
 
 
-    #####################
-    #    Exercício 2    
-    #####################
-        
+    #    Exercício 2
+    #        
     q2 = '''
-        SELECT TOP(5) * FROM clientes
+        SELECT nome_produto, preco FROM produtos
+        WHERE categoria LIKE '%_amb_rguer%' AND preco > 30
+        ORDER BY preco DESC;
     '''
 
     if st.button("Query 2"):
+        st.write('Liste o nome e o preço dos produtos da categoria Hambúrguer que custam \
+                 mais de R$ 30,00, do mais caro para o mais barato.')
         st.dataframe(consultar(q2), width="stretch", hide_index=True)
+
 
 
 # ------------------------

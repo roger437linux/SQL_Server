@@ -4,11 +4,11 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 from urllib.parse import quote_plus
 
-servidor    = st.secrets["database"]["server"]
-banco       = st.secrets["database"]["database"]
-usuario     = st.secrets["database"]["username"]
-senha       = st.secrets["database"]["password"]
-driver      = st.secrets["database"]["driver"]
+servidor    =   st.secrets["database"]["server"]
+banco       =   st.secrets["database"]["database"]
+usuario     =   st.secrets["database"]["username"]
+senha       =   st.secrets["database"]["password"]
+driver      =   st.secrets["database"]["driver"]
 
 def conectar():
 
