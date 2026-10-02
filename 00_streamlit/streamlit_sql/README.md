@@ -61,9 +61,9 @@ server = "127.0.0.1"
 
 database = "hamburgueria"
 
-username = "dev"
+username = "xxxxxx"
 
-password = "ABC123xyz"
+password = "xxxxxx"
 
 driver = "ODBC Driver 18 for SQL Server"
 
